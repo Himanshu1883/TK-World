@@ -2,50 +2,50 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { BrandLogo } from "@/components/ui/BrandLogo";
+import { BrandWordmark } from "@/components/ui/BrandWordmark";
 import { usePrefersReducedMotion } from "@/hooks/useMedia";
 
-export function IntroLoader({ onComplete }: { onComplete: () => void }) {
+const SEEN_KEY = "tkw-intro-seen";
+
+/**
+ * Brief brand overlay on the first homepage view of a session. Skipped for
+ * repeat navigations and when reduced motion is requested.
+ */
+export function IntroLoader() {
   const reduced = usePrefersReducedMotion();
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (reduced) {
-      setShow(false);
-      onComplete();
-      return;
-    }
+    if (reduced || sessionStorage.getItem(SEEN_KEY)) return;
 
-    const t = window.setTimeout(() => {
-      setShow(false);
-      onComplete();
-    }, 1200);
+    sessionStorage.setItem(SEEN_KEY, "1");
+    setShow(true);
 
+    const t = window.setTimeout(() => setShow(false), 1100);
     return () => window.clearTimeout(t);
-  }, [onComplete, reduced]);
+  }, [reduced]);
 
   return (
     <AnimatePresence>
       {show && (
         <motion.div
-          className="fixed inset-0 z-[110] flex items-center justify-center bg-[#0a0a0b]"
+          className="fixed inset-0 z-[110] grid place-items-center bg-ink px-6"
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          aria-hidden
         >
           <motion.div
-            initial={{ opacity: 0, y: 12, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: -8, scale: 0.98 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="px-6"
           >
-            <BrandLogo size="xl" priority />
+            <BrandWordmark size="lg" priority />
             <motion.div
-              className="mx-auto mt-8 h-px w-20 origin-center bg-gradient-to-r from-transparent via-[#c9b07a] to-transparent"
-              initial={{ scaleX: 0, opacity: 0 }}
-              animate={{ scaleX: 1, opacity: 1 }}
-              transition={{ duration: 0.75, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-7 h-px w-full origin-left bg-gold-hairline"
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: 1 }}
+              transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
             />
           </motion.div>
         </motion.div>

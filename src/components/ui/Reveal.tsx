@@ -46,11 +46,14 @@ export function StaggerChildren({
   className,
   stagger = 0.1,
   delay = 0,
+  as = "div",
 }: {
   children: ReactNode;
   className?: string;
   stagger?: number;
   delay?: number;
+  /** Use "ul" when the children are list items, so the markup stays valid. */
+  as?: "div" | "ul";
 }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-8% 0px" });
@@ -66,8 +69,10 @@ export function StaggerChildren({
     },
   };
 
+  const Tag = as === "ul" ? motion.ul : motion.div;
+
   return (
-    <motion.div
+    <Tag
       ref={ref}
       className={className}
       variants={variants}
@@ -75,7 +80,7 @@ export function StaggerChildren({
       animate={inView ? "show" : "hidden"}
     >
       {children}
-    </motion.div>
+    </Tag>
   );
 }
 
@@ -83,15 +88,18 @@ export function StaggerItem({
   children,
   className,
   y = 28,
+  as = "div",
 }: {
   children: ReactNode;
   className?: string;
   y?: number;
+  as?: "div" | "li";
 }) {
   const reduced = usePrefersReducedMotion();
+  const Tag = as === "li" ? motion.li : motion.div;
 
   return (
-    <motion.div
+    <Tag
       className={className}
       variants={{
         hidden: { opacity: reduced ? 1 : 0, y: reduced ? 0 : y },
@@ -103,7 +111,7 @@ export function StaggerItem({
       }}
     >
       {children}
-    </motion.div>
+    </Tag>
   );
 }
 

@@ -1,167 +1,196 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { Play } from "lucide-react";
-import { heroStats, images } from "@/lib/images";
-import { MagneticButton, MagneticLink } from "@/components/ui/MagneticButton";
-import { VideoModal } from "@/components/ui/VideoModal";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Box,
+  ChartColumn,
+  Globe,
+  Handshake,
+  Settings,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
+import { motion } from "framer-motion";
+import { hero, ourBusiness, type BusinessIcon } from "@/lib/content";
 import { usePrefersReducedMotion } from "@/hooks/useMedia";
+import { cn } from "@/lib/cn";
 
 const ease = [0.16, 1, 0.3, 1] as const;
 
-export function Hero({ introDone }: { introDone: boolean }) {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [videoOpen, setVideoOpen] = useState(false);
-  const [slide, setSlide] = useState(0);
+const iconMap: Record<BusinessIcon, LucideIcon> = {
+  ChartColumn,
+  Globe,
+  Box,
+  Users,
+  Handshake,
+  Settings,
+};
+
+export function Hero() {
   const reduced = usePrefersReducedMotion();
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  const bgY = useTransform(scrollYProgress, [0, 1], ["0%", reduced ? "0%" : "12%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", reduced ? "0%" : "5%"]);
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
     if (reduced) return;
-    const id = window.setInterval(() => {
-      setSlide((s) => (s + 1) % images.heroSlides.length);
-    }, 3000);
+    const id = window.setInterval(
+      () => setActive((i) => (i + 1) % hero.slides.length),
+      3000
+    );
     return () => window.clearInterval(id);
   }, [reduced]);
 
-  const show = introDone || reduced;
-
   return (
-    <section
-      id="top"
-      ref={sectionRef}
-      className="relative min-h-[100svh] overflow-hidden bg-[#0b0b0d]"
-    >
-      <motion.div className="absolute inset-0 will-parallax" style={{ y: bgY }}>
-        {images.heroSlides.map((item, i) => (
-          <motion.div
-            key={item.src}
-            className="absolute inset-0"
-            initial={false}
-            animate={{ opacity: slide === i ? 1 : 0 }}
-            transition={{ duration: reduced ? 0 : 1.15, ease }}
-          >
-            <Image
-              src={item.src}
-              alt={item.alt}
-              fill
-              priority={i === 0}
-              sizes="100vw"
-              className="object-cover object-[68%_30%] image-grade"
-            />
-          </motion.div>
+    <section className="relative isolate h-[100svh] max-h-[100svh] overflow-hidden bg-[#080b12]">
+      {/* Right-side cinematic panel */}
+      <div className="absolute inset-0 lg:left-[38%] xl:left-[40%]">
+        {hero.slides.map((slide, i) => (
+          <Image
+            key={slide.src}
+            src={slide.src}
+            alt={slide.alt}
+            fill
+            priority={i === 0}
+            sizes="(max-width: 1024px) 100vw, 62vw"
+            className={cn(
+              "object-cover object-[62%_center] image-grade transition-opacity duration-[1400ms] ease-expo",
+              i === active ? "opacity-100" : "opacity-0"
+            )}
+          />
         ))}
-        <div className="film-grain" />
-      </motion.div>
+        <div
+          className="absolute inset-0 bg-gradient-to-r from-[#080b12] via-[#080b12]/80 to-transparent lg:via-[#080b12]/35 lg:to-transparent"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-[#080b12] via-[#080b12]/70 to-transparent lg:h-48"
+          aria-hidden
+        />
+        <div
+          className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#080b12]/50 to-transparent lg:from-transparent"
+          aria-hidden
+        />
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-[#0b0b0d] via-[#0b0b0d]/80 to-[#0b0b0d]/15" />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0b0b0d]/80 via-transparent to-[#0b0b0d]/40" />
+        <p className="absolute right-6 top-24 hidden text-right text-[10px] font-medium uppercase leading-[1.85] tracking-[0.34em] text-white/70 min-[900px]:top-28 lg:right-10 lg:block xl:right-14">
+          {hero.aside.map((line) => (
+            <span key={line} className="block">
+              {line}
+            </span>
+          ))}
+        </p>
 
-      <motion.div
-        style={{ y: contentY }}
-        className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1440px] flex-col justify-center px-5 pb-10 pt-24 md:px-8 lg:px-12 lg:pb-12 lg:pt-28"
-      >
-        <motion.p
-          className="absolute right-5 top-24 hidden max-w-[7.5rem] text-right text-[10px] font-medium uppercase leading-[1.85] tracking-[0.22em] text-white/70 md:block lg:right-12 lg:top-28"
-          initial={{ opacity: 0 }}
-          animate={show ? { opacity: 1 } : {}}
-          transition={{ duration: 0.9, delay: 0.7, ease }}
+        <div className="absolute bottom-28 right-5 z-10 hidden items-center gap-2 lg:flex xl:right-10">
+          {hero.slides.map((slide, i) => (
+            <button
+              key={slide.src}
+              type="button"
+              onClick={() => setActive(i)}
+              aria-label={`Show slide ${i + 1}`}
+              aria-current={i === active}
+              className={cn(
+                "h-[3px] rounded-full transition-all duration-500 ease-expo",
+                i === active ? "w-8 bg-gold" : "w-4 bg-white/35 hover:bg-white/60"
+              )}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className="shell relative flex h-full min-h-0 flex-col justify-between pb-4 pt-[4.75rem] sm:pb-5 lg:pb-5 lg:pt-[5.25rem]">
+        <motion.div
+          initial={reduced ? false : { opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease }}
+          className="flex min-h-0 max-w-[36.5rem] flex-1 flex-col justify-center py-3 xl:max-w-[39rem]"
         >
-          More Than
-          <br />
-          Investments
-          <br />
-          A Richer
-          <br />
-          Tomorrow
-        </motion.p>
+          <p className="eyebrow">{hero.eyebrow}</p>
 
-        <div className="max-w-[46rem]">
-          <motion.p
-            className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#c9b07a] sm:text-[12px]"
-            initial={{ opacity: 0, y: 12 }}
-            animate={show ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.65, delay: 0.05, ease }}
-          >
-            Global Perspective. Tangible Value.
-          </motion.p>
-
-          <h1 className="mt-5 font-display text-hero font-normal text-[#f3ece0]">
-            <span className="block sm:whitespace-nowrap">Investing in Assets</span>
-            <span className="block text-[#c9b07a]">That Endure.</span>
+          <h1 className="mt-3 font-display text-hero font-medium lg:mt-4">
+            <span className="block text-white">{hero.title[0]}</span>
+            <span className="block text-gold">{hero.title[1]}</span>
           </h1>
 
-          <motion.p
-            className="mt-6 max-w-[32rem] text-[14px] font-normal leading-[1.75] text-[#f3ece0]/75 md:text-[15px]"
-            initial={{ opacity: 0, y: 14 }}
-            animate={show ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.2, ease }}
-          >
-            TK World Investment Group acquires, trades and manages high-value
-            physical assets across global markets, combining expertise, insight
-            and access to exceptional opportunities.
-          </motion.p>
+          <p className="mt-4 max-w-[34rem] text-[13.5px] font-medium leading-relaxed text-white/90 sm:text-[14.5px] xl:mt-5 xl:text-[15.5px]">
+            {hero.intro}
+          </p>
 
-          <motion.div
-            className="mt-9 flex flex-wrap items-center gap-5"
-            initial={{ opacity: 0, y: 14 }}
-            animate={show ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.32, ease }}
-          >
-            <MagneticLink
-              href="#portfolio"
-              className="inline-flex items-center rounded-full bg-[#e8d5a8] px-7 py-3.5 text-[13px] font-medium tracking-wide text-[#1a1610] transition hover:bg-[#f0e2b8]"
+          <div className="mt-3 max-w-[34rem] space-y-2.5 text-[12.5px] leading-[1.65] text-white/60 sm:text-[13px] xl:mt-4 xl:space-y-3.5 xl:text-[13.5px]">
+            {hero.body.map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
+
+          <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-5 xl:mt-7">
+            <Link
+              href="/what-we-do"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-gold px-6 py-2.5 text-[13px] font-medium text-ink transition-colors duration-300 hover:bg-gold-soft xl:px-7 xl:py-3.5 xl:text-[13.5px]"
             >
-              Explore Our Portfolio →
-            </MagneticLink>
-            <MagneticButton
-              type="button"
-              data-cursor="Play"
-              onClick={() => setVideoOpen(true)}
-              className="inline-flex items-center gap-3 text-[13px] font-medium tracking-wide text-[#f3ece0] transition hover:text-gold"
+              Explore Our Business
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+
+            <Link
+              href="/about"
+              className="inline-flex items-center gap-3 self-start text-left text-white/90 transition-colors hover:text-white"
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1a1610] text-[#f3ece0] shadow-[0_0_0_1px_rgba(243,236,224,0.12)]">
-                <Play className="ml-0.5 h-4 w-4 fill-current" />
+              <span className="grid h-10 w-10 place-items-center rounded-full border border-white/35 xl:h-12 xl:w-12">
+                <ArrowRight className="h-3.5 w-3.5 xl:h-4 xl:w-4" />
               </span>
-              <span className="text-left leading-tight">
-                Watch Our Story
-                <span className="block text-[11px] font-normal text-white/55">
-                  2 min
+              <span>
+                <span className="block text-[13px] font-medium leading-none xl:text-[13.5px]">
+                  About Us
+                </span>
+                <span className="mt-1.5 block text-[11.5px] text-white/50">
+                  Our Story
                 </span>
               </span>
-            </MagneticButton>
-          </motion.div>
-        </div>
+            </Link>
+          </div>
+        </motion.div>
 
         <motion.div
-          className="mt-10 grid max-w-3xl grid-cols-2 gap-y-8 md:mt-12 md:grid-cols-4"
-          initial={{ opacity: 0, y: 12 }}
-          animate={show ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.75, delay: 0.48, ease }}
+          initial={reduced ? false : { opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: reduced ? 0 : 0.18, ease }}
+          className="shrink-0"
         >
-          {heroStats.map((stat) => (
-            <div key={stat.label}>
-              <p className="font-display text-[1.85rem] font-normal leading-none text-[#c9b07a] md:text-[2.1rem]">
-                {stat.value}
-              </p>
-              <p className="mt-2 text-[11px] font-medium uppercase tracking-[0.08em] text-white/55">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </motion.div>
-      </motion.div>
+          <div className="flex items-start gap-5 border-t border-white/10 pt-3.5 lg:gap-6 lg:pt-4">
+            <p className="hidden w-[4.6rem] shrink-0 pt-0.5 text-[10px] font-semibold uppercase leading-tight tracking-[0.18em] text-gold sm:block">
+              {ourBusiness.eyebrow}
+            </p>
 
-      <VideoModal open={videoOpen} onClose={() => setVideoOpen(false)} />
+            <ul className="grid min-w-0 flex-1 grid-cols-2 gap-x-3 gap-y-3 sm:grid-cols-3 lg:grid-cols-6 lg:gap-x-4">
+              {ourBusiness.items.map((item) => {
+                const Icon = iconMap[item.icon];
+                return (
+                  <li key={item.title} className="flex min-w-0 items-start gap-2">
+                    <Icon
+                      className="mt-0.5 h-4 w-4 shrink-0 text-gold"
+                      strokeWidth={1.5}
+                    />
+                    <span className="min-w-0 text-[11px] font-medium leading-[1.3] text-white/85 xl:text-[12px]">
+                      {item.title}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          <div className="mt-3 flex flex-col gap-2 border-t border-white/10 pt-3 text-[9.5px] font-medium uppercase tracking-[0.2em] text-white/45 sm:flex-row sm:items-center sm:justify-between lg:mt-3.5 lg:pt-3.5">
+            <p className="flex items-center gap-3">
+              {hero.footerLeft}
+              <span className="hidden h-px w-8 bg-red/70 sm:block" aria-hidden />
+            </p>
+            <p className="flex items-center gap-3 sm:flex-row-reverse">
+              {hero.footerRight}
+              <span className="hidden h-px w-8 bg-red/70 sm:block" aria-hidden />
+            </p>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }

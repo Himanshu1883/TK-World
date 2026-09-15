@@ -1,85 +1,75 @@
-import { BrandLogo } from "@/components/ui/BrandLogo";
-import { navLinks } from "@/lib/images";
+import Link from "next/link";
+import { BrandWordmark } from "@/components/ui/BrandWordmark";
+import { navLinks, site } from "@/lib/content";
 
-function LinkedInIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.5h4V23h-4V8.5zM8.5 8.5h3.8v2h.06c.53-1 1.84-2.06 3.79-2.06 4.05 0 4.8 2.67 4.8 6.14V23h-4v-6.6c0-1.57-.03-3.6-2.2-3.6-2.2 0-2.54 1.72-2.54 3.5V23h-4V8.5z" />
-    </svg>
-  );
-}
-
-function InstagramIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      className={className}
-      aria-hidden
-    >
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-function YouTubeIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden>
-      <path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8zM9.75 15.5v-7l6.2 3.5-6.2 3.5z" />
-    </svg>
-  );
-}
-
-const socials = [
-  { Icon: LinkedInIcon, label: "LinkedIn", href: "#" },
-  { Icon: InstagramIcon, label: "Instagram", href: "#" },
-  { Icon: YouTubeIcon, label: "YouTube", href: "#" },
-];
+// The brief's footer nav omits Home
+const footerLinks = navLinks.filter((link) => link.href !== "/");
 
 export function Footer() {
   return (
-    <footer className="relative bg-[#0b0b0d] text-[#f0ebe0]">
-      <div className="h-px w-full bg-gold-hairline opacity-70" />
+    <footer className="bg-ink text-foreground">
+      <div className="h-px w-full bg-gold-hairline opacity-60" />
 
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-10 px-5 py-12 md:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
-        <a href="#top" aria-label="TK World Investment Group — Home">
-          <BrandLogo size="md" />
-        </a>
+      <div className="shell grid gap-12 py-14 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr] lg:gap-16 lg:py-16">
+        <div>
+          <Link href="/" aria-label={`${site.name} — Home`}>
+            <BrandWordmark size="md" />
+          </Link>
+          <p className="mt-6 max-w-sm text-[13px] leading-relaxed text-muted">
+            {site.tagline}
+          </p>
+          <p className="mt-4 text-[12px] uppercase tracking-[0.18em] text-gold">
+            {site.country}
+          </p>
+        </div>
 
-        <nav className="flex flex-wrap gap-7 lg:justify-center">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[13px] text-[#f0ebe0]/75 transition hover:text-gold"
-            >
-              {link.label}
-            </a>
-          ))}
+        <nav aria-label="Footer">
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/50">
+            Navigate
+          </h2>
+          <ul className="mt-5 space-y-3">
+            {footerLinks.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="text-[13.5px] text-white/90 transition-colors hover:text-gold"
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </nav>
 
-        <div className="flex items-center gap-3">
-          {socials.map(({ Icon, label, href }) => (
-            <a
-              key={label}
-              href={href}
-              aria-label={label}
-              className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-[#f0ebe0]/75 transition hover:border-gold hover:bg-gold hover:text-[#0b0b0d]"
-            >
-              <Icon className="h-4 w-4" />
-            </a>
-          ))}
+        <div>
+          <h2 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-foreground/50">
+            Enquiries
+          </h2>
+          <ul className="mt-5 space-y-3 text-[13.5px]">
+            <li>
+              <a
+                href={`mailto:${site.email}`}
+                className="text-white/90 transition-colors hover:text-gold"
+              >
+                {site.email}
+              </a>
+            </li>
+            <li>
+              <a
+                href={site.url}
+                className="text-white/90 transition-colors hover:text-gold"
+              >
+                {site.website}
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
 
-      <div className="border-t border-white/5">
-        <div className="mx-auto flex max-w-[1440px] flex-col gap-2 px-5 py-6 text-[11px] tracking-wide text-[#9a958c] md:flex-row md:items-center md:justify-between md:px-8 lg:px-12">
-          <p>© 2026 TK World Investment Group. All rights reserved.</p>
-          <p>Dubai, UAE — info@tkworld.ae</p>
+      <div className="border-t border-white/10">
+        <div className="shell flex flex-col gap-2 py-6 text-[11.5px] tracking-wide text-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>© {site.name}. All Rights Reserved.</p>
+          <p>{site.country}</p>
         </div>
       </div>
     </footer>

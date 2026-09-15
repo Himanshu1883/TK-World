@@ -1,24 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
-import { MagneticLink } from "@/components/ui/MagneticButton";
-import { BrandLogo } from "@/components/ui/BrandLogo";
-import { navLinks } from "@/lib/images";
+import { BrandWordmark } from "@/components/ui/BrandWordmark";
+import { navLinks, site } from "@/lib/content";
+import { EnquiryButton } from "@/components/enquiry/EnquiryButton";
 import { cn } from "@/lib/cn";
 
 export function Navigation() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Close the drawer whenever the route changes
+  useEffect(() => setOpen(false), [pathname]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -27,61 +32,66 @@ export function Navigation() {
     };
   }, [open]);
 
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
+
   return (
     <header
       className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-theme",
-        scrolled
-          ? "border-b border-gold/10 bg-[var(--nav-solid)] backdrop-blur-xl"
-          : "border-b border-transparent bg-transparent"
+        "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+        scrolled || open
+          ? "border-b border-white/10 bg-ink/95 backdrop-blur-xl"
+          : "border-b border-transparent"
       )}
     >
-      <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-5 md:px-8 lg:h-24 lg:px-12">
-        <a
-          href="#top"
-          className="group shrink-0"
-          aria-label="TK World Investment Group — Home"
-        >
-          <BrandLogo
-            size="md"
-            priority
-            className="transition duration-theme group-hover:opacity-90"
-          />
-        </a>
+      <div className="shell flex h-[72px] items-center justify-between lg:h-20">
+        <Link href="/" aria-label={`${site.name} — Home`} className="shrink-0">
+          <BrandWordmark size="md" priority />
+        </Link>
 
-        <nav className="hidden items-center gap-9 lg:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className={cn(
-                "text-[13px] font-medium tracking-wide transition hover:text-gold",
-                scrolled ? "text-foreground/80" : "text-white/80"
-              )}
-            >
-              {link.label}
-            </a>
-          ))}
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-9" aria-label="Primary">
+          {navLinks.map((link) => {
+            const active = isActive(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                aria-current={active ? "page" : undefined}
+                className={cn(
+                  "relative py-1 text-[13px] font-medium tracking-wide transition-colors",
+                  active
+                    ? "text-foreground"
+                    : "text-foreground/65 hover:text-foreground"
+                )}
+              >
+                {link.label}
+                <span
+                  className={cn(
+                    "absolute -bottom-0.5 left-0 h-[2px] w-full origin-left bg-red transition-transform duration-300 ease-expo",
+                    active ? "scale-x-100" : "scale-x-0"
+                  )}
+                  aria-hidden
+                />
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
-          <ThemeToggle />
-          <MagneticLink
-            href="#contact"
-            className="hidden items-center rounded-full border border-gold px-6 py-2.5 text-[12px] font-medium tracking-wide text-gold transition hover:bg-gold hover:text-[#101013] md:inline-flex"
+          <EnquiryButton
+            className="hidden rounded-sm border border-gold px-5 py-2.5 text-[11.5px] font-semibold uppercase tracking-[0.14em] text-gold transition-colors hover:bg-gold hover:text-ink md:inline-flex"
           >
-            Discuss an Opportunity →
-          </MagneticLink>
+            Contact Us
+          </EnquiryButton>
+
           <button
             type="button"
-            className={cn(
-              "flex h-10 w-10 items-center justify-center rounded-full border transition lg:hidden",
-              scrolled ? "border-[var(--border)] text-foreground" : "border-white/25 text-white"
-            )}
+            className="flex h-10 w-10 items-center justify-center rounded-sm border border-white/20 text-foreground transition-colors hover:border-gold hover:text-gold lg:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </div>
@@ -89,30 +99,35 @@ export function Navigation() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            className="border-t border-gold/10 bg-[var(--background)] px-5 py-8 lg:hidden"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="overflow-hidden border-t border-white/10 bg-ink lg:hidden"
           >
-            <div className="flex flex-col gap-5">
-              {navLinks.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="font-display text-3xl text-foreground"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <a
-                href="#contact"
+            <nav className="shell flex flex-col py-4" aria-label="Mobile">
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={cn(
+                      "border-b border-white/5 py-4 text-[15px] font-medium transition-colors last:border-b-0",
+                      active ? "text-gold" : "text-foreground/80"
+                    )}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+              <EnquiryButton
                 onClick={() => setOpen(false)}
-                className="mt-2 inline-flex w-fit items-center rounded-full border border-gold px-5 py-2.5 text-[12px] text-gold"
+                className="btn-gold mt-5 w-full"
               >
-                Discuss an Opportunity →
-              </a>
-            </div>
+                Contact Us
+              </EnquiryButton>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

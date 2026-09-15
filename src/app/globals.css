@@ -3,57 +3,31 @@
 @tailwind utilities;
 
 /* ---------------------------------------------
-   Light theme — warm ivory base, deep charcoal type
+   TK World Trading Group — single dark corporate
+   palette. Charcoal-navy base, gold primary
+   accent, red as a sparing secondary accent.
 ---------------------------------------------- */
 :root {
-  --background: #f5f1e8;
-  --foreground: #141414;
-  --card: #ffffff;
-  --muted: #6b6560;
-  --gold: #b8955a;
-  --gold-soft: #c9b07a;
-  --border: rgba(20, 20, 20, 0.1);
-  --overlay-grade: rgba(245, 241, 232, 0.1);
-  --image-contrast: 1.04;
-  --image-saturate: 0.95;
-  --image-brightness: 1;
-  --glass: rgba(255, 255, 255, 0.72);
-  --nav-solid: rgba(245, 241, 232, 0.85);
-  --shadow-card: 0 18px 40px -26px rgba(20, 20, 20, 0.3);
-  --radius-card: 0.875rem;
+  --ink: #0c1018;
+  --navy: #111a2b;
+  --surface: #16202f;
+  --paper: #f6f4ef;
 
-  /* Section that runs opposite to the active theme */
-  --contrast-bg: #101013;
-  --contrast-fg: #f0ebe0;
-  --contrast-muted: #9a958c;
-  --contrast-card: #17171b;
-  --contrast-border: rgba(201, 176, 122, 0.18);
-}
+  --fg: #e9eaed;
+  --muted: #c5b9a6;
+  --border: rgba(201, 176, 122, 0.16);
 
-/* ---------------------------------------------
-   Dark theme — warm near-black, gold, ivory type
----------------------------------------------- */
-.dark {
-  --background: #101013;
-  --foreground: #f0ebe0;
-  --card: #17171b;
-  --muted: #9a958c;
   --gold: #c9b07a;
-  --gold-soft: #e4d09a;
-  --border: rgba(201, 176, 122, 0.18);
-  --overlay-grade: rgba(16, 16, 19, 0.35);
-  --image-contrast: 1.1;
-  --image-saturate: 0.96;
-  --image-brightness: 0.94;
-  --glass: rgba(20, 20, 24, 0.55);
-  --nav-solid: rgba(16, 16, 19, 0.78);
-  --shadow-card: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
+  --gold-soft: #e0cb9a;
+  --red: #b0262c;
 
-  --contrast-bg: #f5f1e8;
-  --contrast-fg: #141414;
-  --contrast-muted: #6b6560;
-  --contrast-card: #ffffff;
-  --contrast-border: rgba(20, 20, 20, 0.1);
+  /* Values a light band swaps in for its subtree */
+  --paper-fg: #131821;
+  --paper-muted: #6a6358;
+  --paper-border: rgba(19, 24, 33, 0.12);
+  --paper-gold: #866526;
+
+  --shadow-card: 0 24px 60px -30px rgba(0, 0, 0, 0.75);
 }
 
 html {
@@ -78,68 +52,78 @@ html.lenis body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
+  color: var(--fg);
+  background: var(--ink);
   font-family: var(--font-dm-sans), system-ui, sans-serif;
-  transition:
-    background-color 400ms ease,
-    color 400ms ease;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
   background: color-mix(in srgb, var(--gold) 35%, transparent);
-  color: var(--foreground);
+  color: #ffffff;
 }
 
 @layer base {
   * {
     border-color: var(--border);
   }
+
+  :focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
 }
 
 @layer components {
+  /* Consistent page gutter + max width across every section */
+  .shell {
+    @apply mx-auto w-full max-w-[1320px] px-5 sm:px-6 md:px-8 lg:px-12;
+  }
+
   .eyebrow {
-    @apply text-[11px] font-medium uppercase tracking-[0.22em] text-gold sm:text-[12px];
+    @apply text-[10.5px] font-semibold uppercase tracking-[0.22em] text-gold sm:text-[11.5px];
   }
 
   .gold-rule {
     height: 1px;
     width: 3.5rem;
-    background: linear-gradient(90deg, var(--gold), transparent);
+    background: linear-gradient(90deg, var(--red), transparent);
+  }
+
+  /* Section bands — alternate to give the page rhythm */
+  .band-ink {
+    background: var(--ink);
+  }
+
+  .band-navy {
+    background: var(--navy);
+  }
+
+  .band-paper {
+    background: var(--paper);
+    color: var(--paper-fg);
+    --fg: var(--paper-fg);
+    --muted: var(--paper-muted);
+    --border: var(--paper-border);
+    --surface: #ffffff;
+    --gold: var(--paper-gold);
+    --shadow-card: 0 20px 45px -28px rgba(19, 24, 33, 0.35);
   }
 
   .image-grade {
-    filter: contrast(var(--image-contrast)) saturate(var(--image-saturate))
-      brightness(var(--image-brightness));
-    transition: filter 400ms ease;
+    filter: contrast(1.06) saturate(0.92) brightness(0.92);
   }
 
-  .image-vignette {
-    pointer-events: none;
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.3) 100%),
-      linear-gradient(180deg, transparent, var(--overlay-grade));
-    mix-blend-mode: multiply;
-    opacity: 0.85;
-  }
-
-  .film-grain {
-    pointer-events: none;
-    position: absolute;
-    inset: 0;
-    opacity: 0.04;
-    mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  .image-grade-page {
+    filter: contrast(1.04) saturate(0.96) brightness(1.08);
   }
 
   .link-underline {
     position: relative;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     color: var(--gold);
   }
 
@@ -147,13 +131,13 @@ body {
     content: "";
     position: absolute;
     left: 0;
-    bottom: -2px;
+    bottom: -3px;
     width: 100%;
     height: 1px;
-    background: var(--gold);
+    background: currentColor;
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .link-underline:hover::after {
@@ -161,24 +145,20 @@ body {
   }
 
   .glass-panel {
-    background: var(--glass);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid var(--border);
+    background: rgba(12, 16, 24, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  /* Section band that flips against the active theme */
-  .band-contrast {
-    background: var(--contrast-bg);
-    color: var(--contrast-fg);
-    --background: var(--contrast-bg);
-    --foreground: var(--contrast-fg);
-    --muted: var(--contrast-muted);
-    --card: var(--contrast-card);
-    --border: var(--contrast-border);
-    transition:
-      background-color 400ms ease,
-      color 400ms ease;
+  /* Primary CTA — gold fill, dark label */
+  .btn-gold {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-gold px-7 py-3.5 text-[12.5px] font-semibold uppercase tracking-[0.13em] text-ink transition-colors duration-300 hover:bg-gold-soft;
+  }
+
+  /* Secondary CTA — hairline outline */
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-current px-7 py-3.5 text-[12.5px] font-semibold uppercase tracking-[0.13em] text-gold transition-colors duration-300 hover:bg-gold hover:text-ink;
   }
 }
 
@@ -187,47 +167,12 @@ body {
     text-wrap: balance;
   }
 
-  .ken-burns {
-    animation: kenBurns 20s ease-in-out infinite alternate;
-  }
-
-  .will-parallax {
-    will-change: transform;
-  }
-
   .vertical-text {
     writing-mode: vertical-rl;
   }
 }
 
-@keyframes kenBurns {
-  from {
-    transform: scale(1);
-  }
-  to {
-    transform: scale(1.08);
-  }
-}
-
-@keyframes scrollPulse {
-  0%,
-  100% {
-    transform: scaleY(0.35);
-    opacity: 0.35;
-  }
-  50% {
-    transform: scaleY(1);
-    opacity: 1;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .ken-burns,
-  .will-parallax {
-    animation: none !important;
-    transform: none !important;
-  }
-
   *,
   *::before,
   *::after {
@@ -235,12 +180,5 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
-  }
-}
-
-@media (pointer: fine) {
-  .cursor-custom,
-  .cursor-custom * {
-    cursor: none !important;
   }
 }

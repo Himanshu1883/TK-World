@@ -1,6 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { Navigation } from "@/components/layout/Navigation";
+import { Footer } from "@/components/layout/Footer";
+import { EnquiryProvider } from "@/components/enquiry/EnquiryProvider";
+import { EnquiryModal } from "@/components/enquiry/EnquiryModal";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { site } from "@/lib/content";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -8,7 +14,6 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
   display: "swap",
   weight: ["400", "500", "600", "700"],
-  style: ["normal"],
 });
 
 const dmSans = DM_Sans({
@@ -18,65 +23,98 @@ const dmSans = DM_Sans({
   weight: ["400", "500", "600", "700"],
 });
 
+const description =
+  "TK World Trading Group is a privately owned international trading and commercial management group headquartered in the United Arab Emirates, providing strategic leadership, procurement and operational support across the GCC and international markets.";
+
+const ogImage = {
+  url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&h=630&q=80",
+  width: 1200,
+  height: 630,
+  alt: `${site.name} — ${site.tagline}`,
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0c1018",
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://tkworld.ae"),
+  metadataBase: new URL(site.url),
   title: {
-    default: "TK World Investment Group | Assets That Endure",
-    template: "%s | TK World Investment Group",
+    default: `${site.name} | ${site.tagline}`,
+    template: `%s | ${site.name}`,
   },
-  description:
-    "Dubai-based luxury asset investment firm specializing in real estate, fine watches, collector cars, sports & events, and strategic investments.",
+  description,
   keywords: [
-    "TK World",
-    "luxury investment",
-    "Dubai family office",
-    "collector cars",
-    "fine watches",
-    "luxury real estate",
+    "TK World Trading Group",
+    "international trading UAE",
+    "commercial management",
+    "regional headquarters United Arab Emirates",
+    "procurement and supplier management",
+    "GCC trading group",
+    "Tariq Khan",
   ],
+  authors: [{ name: site.name, url: site.url }],
+  creator: site.name,
+  publisher: site.name,
+  category: "business",
+  applicationName: site.name,
+  referrer: "origin-when-cross-origin",
+  formatDetection: { telephone: false, email: false, address: false },
+  icons: {
+    icon: [
+      { url: "/icon-tk.png", type: "image/png", sizes: "512x512" },
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+    ],
+    apple: [{ url: "/apple-icon", type: "image/png", sizes: "180x180" }],
+    shortcut: "/favicon-32.png",
+  },
   openGraph: {
-    title: "TK World Investment Group",
-    description:
-      "Investing in assets that endure — luxury property, watches, cars, sports & strategic holdings from Dubai.",
-    url: "https://tkworld.ae",
-    siteName: "TK World Investment Group",
+    title: site.name,
+    description: site.tagline,
+    url: site.url,
+    siteName: site.name,
     locale: "en_AE",
     type: "website",
-    images: [
-      {
-        url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&h=630&q=80",
-        width: 1200,
-        height: 630,
-        alt: "Dubai skyline at dusk — TK World Investment Group",
-      },
-    ],
+    images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TK World Investment Group",
-    description:
-      "Investing in assets that endure — curated luxury holdings from Dubai.",
-    images: [
-      "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&h=630&q=80",
-    ],
+    title: site.name,
+    description: site.tagline,
+    images: [ogImage.url],
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en-AE">
       <body
         className={`${playfair.variable} ${dmSans.variable} font-sans antialiased`}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <JsonLd />
+        <EnquiryProvider>
+          <SmoothScroll>
+            <Navigation />
+            <main id="main">{children}</main>
+            <Footer />
+          </SmoothScroll>
+          <EnquiryModal />
+        </EnquiryProvider>
       </body>
     </html>
   );
