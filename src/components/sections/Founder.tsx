@@ -5,7 +5,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { images } from "@/lib/images";
 import { MagneticLink } from "@/components/ui/MagneticButton";
-import { FadeUp, MaskReveal } from "@/components/ui/Reveal";
+import { FadeUp } from "@/components/ui/Reveal";
 import { usePrefersReducedMotion } from "@/hooks/useMedia";
 
 export function Founder() {
@@ -20,7 +20,7 @@ export function Founder() {
   const imageY = useTransform(
     scrollYProgress,
     [0, 1],
-    reduced ? ["0%", "0%"] : ["-8%", "8%"]
+    reduced ? ["0%", "0%"] : ["-6%", "6%"]
   );
   const imageScale = useTransform(
     scrollYProgress,
@@ -32,62 +32,61 @@ export function Founder() {
     <section
       id="founder"
       ref={sectionRef}
-      className="band-invert relative overflow-hidden py-24 md:py-0"
+      className="relative overflow-hidden bg-[#101013] text-[#f3ece0]"
     >
-      <div className="mx-auto grid max-w-[1440px] lg:min-h-[100svh] lg:grid-cols-2">
-        <div className="flex flex-col justify-center px-5 py-8 md:px-8 lg:px-12 lg:py-28">
+      <div className="mx-auto grid max-w-[1440px] lg:min-h-[34rem] lg:grid-cols-[1.05fr_0.9fr_0.95fr]">
+        <div className="flex flex-col justify-center px-5 py-16 md:px-8 lg:py-24 lg:pl-12 lg:pr-10">
           <FadeUp>
-            <p className="eyebrow">Our Founder</p>
-          </FadeUp>
-          <MaskReveal className="mt-4">
-            <h2 className="font-display text-section text-foreground">
-              Tariq Khan
-            </h2>
-          </MaskReveal>
-          <FadeUp delay={0.1}>
-            <p className="mt-2 text-[14px] tracking-[0.12em] text-muted">
-              Founder & Director
+            <p className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#c9b07a] sm:text-[12px]">
+              Our Founder
             </p>
-            <div className="gold-rule mt-6" />
           </FadeUp>
-          <FadeUp delay={0.15}>
-            <p className="mt-8 max-w-md text-[15px] leading-relaxed text-muted">
-              Guided by a conviction that true wealth is measured in assets that
-              endure, Tariq Khan founded TK World to bring private investors a
-              curated pathway into luxury markets—anchored in Dubai, oriented
-              globally, and executed with discretion.
+          <h2 className="mt-4 font-display text-[clamp(2.4rem,5vw,3.6rem)] font-normal leading-[1.08] tracking-[-0.02em] text-[#f3ece0]">
+            Tariq Khan
+          </h2>
+          <FadeUp delay={0.08}>
+            <p className="mt-3 font-display text-[1.35rem] italic text-[#c9b07a]">
+              Founder &amp; Director
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.14}>
+            <p className="mt-7 max-w-[22rem] text-[14px] leading-[1.8] text-white/60">
+              With a passion for exceptional assets and a long-term vision, Tariq
+              Khan founded TK World to create a global platform for investing in
+              real value. His expertise, network and market insight drive the
+              group&apos;s success across diverse asset classes.
             </p>
           </FadeUp>
           <FadeUp delay={0.2}>
             <MagneticLink
               href="#contact"
-              className="mt-9 inline-flex w-fit items-center rounded-full bg-gold px-7 py-3.5 text-[13px] font-medium text-[#0a0a0b] transition hover:bg-gold-soft"
+              className="mt-9 inline-flex w-fit items-center rounded-sm bg-[#e8d5a8] px-7 py-3 text-[13px] font-medium tracking-wide text-[#1a1610] transition hover:bg-[#f0e2b8]"
             >
               Our Story →
             </MagneticLink>
           </FadeUp>
+        </div>
 
-          <FadeUp delay={0.28} className="mt-16 max-w-lg">
-            <div className="relative pl-2">
+        <div className="flex flex-col justify-center px-5 pb-12 md:px-8 lg:px-6 lg:py-24">
+          <FadeUp delay={0.1}>
+            <div className="max-w-[22rem]">
               <span
                 aria-hidden
-                className="font-display absolute -left-1 -top-8 text-7xl leading-none text-gold/25"
+                className="block font-display text-6xl leading-none text-[#c9b07a]"
               >
                 “
               </span>
-              <MaskReveal>
-                <blockquote className="font-display text-2xl italic leading-snug text-foreground md:text-3xl">
-                  True wealth is built on assets that stand the test of time.
-                </blockquote>
-              </MaskReveal>
-              <p className="mt-5 text-[11px] uppercase tracking-[0.22em] text-gold">
-                — Tariq Khan
+              <blockquote className="mt-2 font-display text-[1.65rem] italic leading-[1.35] text-[#f3ece0] md:text-[1.85rem]">
+                True wealth is built on assets that stand the test of time.”
+              </blockquote>
+              <p className="mt-8 text-[11px] font-medium uppercase tracking-[0.28em] text-[#c9b07a]">
+                Tariq Khan
               </p>
             </div>
           </FadeUp>
         </div>
 
-        <div className="relative mt-10 min-h-[28rem] overflow-hidden lg:mt-0 lg:min-h-full">
+        <div className="relative min-h-[24rem] overflow-hidden md:min-h-[28rem] lg:min-h-full">
           <motion.div
             className="absolute inset-0 will-parallax"
             style={{ y: imageY, scale: imageScale }}
@@ -96,19 +95,26 @@ export function Founder() {
               src={images.founder.src}
               alt={images.founder.alt}
               fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover image-grade grayscale-[0.35] contrast-125"
+              sizes="(max-width: 1024px) 100vw, 34vw"
+              className="object-cover object-center grayscale-[0.15] contrast-110 image-grade"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-black/20 dark:from-black/60" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#101013] via-[#101013]/20 to-transparent lg:from-[#101013]/70" />
             <div className="film-grain" />
           </motion.div>
 
-          <p
-            className="pointer-events-none absolute right-4 top-1/2 hidden -translate-y-1/2 select-none text-[11px] uppercase tracking-[0.35em] text-white/70 lg:block"
-            style={{ writingMode: "vertical-rl" }}
-          >
-            People · Assets · Opportunities · A Brighter Tomorrow
-          </p>
+          <div className="pointer-events-none absolute right-5 top-1/2 hidden -translate-y-1/2 text-right lg:block">
+            <p className="select-none text-[10px] font-medium uppercase leading-[2.15] tracking-[0.28em] text-white/80">
+              People
+              <br />
+              Assets
+              <br />
+              Opportunities
+              <br />
+              A Brighter
+              <br />
+              Tomorrow
+            </p>
+          </div>
         </div>
       </div>
     </section>

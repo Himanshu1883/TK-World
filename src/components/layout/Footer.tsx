@@ -11,7 +11,14 @@ function LinkedInIcon({ className }: { className?: string }) {
 
 function InstagramIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" className={className} aria-hidden>
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      className={className}
+      aria-hidden
+    >
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
       <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none" />
@@ -27,38 +34,41 @@ function YouTubeIcon({ className }: { className?: string }) {
   );
 }
 
+const socials = [
+  { Icon: LinkedInIcon, label: "LinkedIn", href: "#" },
+  { Icon: InstagramIcon, label: "Instagram", href: "#" },
+  { Icon: YouTubeIcon, label: "YouTube", href: "#" },
+];
+
 export function Footer() {
   return (
-    <footer className="relative bg-[#0a0a0b] text-[#f5f2ec]">
+    <footer className="relative bg-[#0b0b0d] text-[#f0ebe0]">
       <div className="h-px w-full bg-gold-hairline opacity-70" />
-      <div className="mx-auto flex max-w-[1440px] flex-col gap-10 px-5 py-14 md:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
+
+      <div className="mx-auto flex max-w-[1440px] flex-col gap-10 px-5 py-12 md:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
         <a href="#top" aria-label="TK World Investment Group — Home">
           <BrandLogo size="md" />
         </a>
 
-        <nav className="flex flex-wrap gap-6 lg:justify-center">
+        <nav className="flex flex-wrap gap-7 lg:justify-center">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-[13px] text-[#f5f2ec]/80 transition hover:text-gold"
+              className="text-[13px] text-[#f0ebe0]/75 transition hover:text-gold"
             >
               {link.label}
             </a>
           ))}
         </nav>
 
-        <div className="flex items-center gap-4">
-          {[
-            { Icon: LinkedInIcon, label: "LinkedIn", href: "#" },
-            { Icon: InstagramIcon, label: "Instagram", href: "#" },
-            { Icon: YouTubeIcon, label: "YouTube", href: "#" },
-          ].map(({ Icon, label, href }) => (
+        <div className="flex items-center gap-3">
+          {socials.map(({ Icon, label, href }) => (
             <a
               key={label}
               href={href}
               aria-label={label}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-[#f5f2ec]/80 transition hover:border-gold hover:text-gold"
+              className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-[#f0ebe0]/75 transition hover:border-gold hover:bg-gold hover:text-[#0b0b0d]"
             >
               <Icon className="h-4 w-4" />
             </a>

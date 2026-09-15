@@ -8,41 +8,40 @@ import { FadeUp, MaskReveal } from "@/components/ui/Reveal";
 
 export function ContactCTA() {
   return (
-    <section id="contact" className="relative overflow-hidden py-28 md:py-36">
+    <section id="contact" className="relative overflow-hidden bg-[#101013]">
       <div className="absolute inset-0">
-            <Image
-              src={images.cta.src}
-              alt={images.cta.alt}
-              fill
-              sizes="100vw"
-              className="object-cover image-grade"
-            />
-            <div className="image-vignette" />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/65 to-black/45" />
-            <div className="film-grain" />
+        <Image
+          src={images.cta.src}
+          alt={images.cta.alt}
+          fill
+          sizes="100vw"
+          className="object-cover object-[center_40%] image-grade"
+        />
+        <div className="image-vignette" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0b0b0d] via-[#0b0b0d]/85 to-[#0b0b0d]/35" />
+        <div className="film-grain" />
       </div>
 
-      <div className="relative z-10 mx-auto grid max-w-[1440px] gap-12 px-5 md:px-8 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:px-12">
+      <div className="relative z-10 mx-auto grid max-w-[1440px] gap-12 px-5 py-20 md:px-8 md:py-24 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:px-12 lg:py-28">
         <div>
           <FadeUp>
             <p className="eyebrow text-gold-soft">Let&apos;s Talk</p>
           </FadeUp>
           <MaskReveal className="mt-4">
             <h2 className="font-display text-section text-white">
-              Explore Opportunities{" "}
-              <span className="italic text-gold-soft">Together.</span>
+              Explore Opportunities Together.
             </h2>
           </MaskReveal>
           <FadeUp delay={0.12}>
-            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-white/70">
-              Whether you are allocating into a first luxury holding or refining
-              an established portfolio, we welcome a private conversation.
+            <p className="mt-5 max-w-lg text-[14px] leading-[1.8] text-white/70">
+              Whether you are an investor, partner or simply want to learn more
+              about our portfolio, we would be delighted to hear from you.
             </p>
           </FadeUp>
           <FadeUp delay={0.18}>
             <MagneticLink
               href="mailto:info@tkworld.ae"
-              className="mt-9 inline-flex items-center rounded-full bg-gold px-7 py-3.5 text-[13px] font-medium text-[#0a0a0b] transition hover:bg-gold-soft"
+              className="mt-9 inline-flex items-center rounded-full bg-gold px-7 py-3.5 text-[13px] font-medium text-[#101013] transition hover:bg-gold-soft"
             >
               Discuss an Opportunity →
             </MagneticLink>
@@ -50,14 +49,18 @@ export function ContactCTA() {
         </div>
 
         <FadeUp delay={0.2}>
-          <div className="glass-panel ml-auto w-full max-w-sm rounded-2xl p-7 text-white lg:justify-self-end">
-            <ul className="space-y-5">
-              <li className="flex items-start gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+          <div className="glass-panel w-full rounded-xl p-7 text-white lg:ml-auto lg:max-w-sm">
+            <ul className="space-y-6">
+              <li className="flex items-start gap-4">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/30 text-gold">
+                  <MapPin className="h-4 w-4" />
+                </span>
                 <span className="text-[14px] leading-relaxed">Dubai, UAE</span>
               </li>
-              <li className="flex items-start gap-3">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+              <li className="flex items-start gap-4">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/30 text-gold">
+                  <Mail className="h-4 w-4" />
+                </span>
                 <a
                   href="mailto:info@tkworld.ae"
                   className="text-[14px] transition hover:text-gold"
@@ -65,8 +68,10 @@ export function ContactCTA() {
                   info@tkworld.ae
                 </a>
               </li>
-              <li className="flex items-start gap-3">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold" />
+              <li className="flex items-start gap-4">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-gold/30 text-gold">
+                  <Phone className="h-4 w-4" />
+                </span>
                 <a
                   href="tel:+97141234567"
                   className="text-[14px] transition hover:text-gold"

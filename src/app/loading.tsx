@@ -13,7 +13,7 @@ export default function Loading() {
           className="mx-auto h-20 w-auto object-contain sm:h-24"
         />
         <div className="mx-auto mt-8 h-px w-20 overflow-hidden bg-white/10">
-          <div className="h-full w-1/2 animate-pulse bg-[#c9a24b]" />
+          <div className="h-full w-1/2 animate-pulse bg-[#c9b07a]" />
         </div>
       </div>
     </div>

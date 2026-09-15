@@ -36,17 +36,28 @@ export function Navigation() {
           : "border-b border-transparent bg-transparent"
       )}
     >
-      <div className="mx-auto flex h-[4.5rem] max-w-[1440px] items-center justify-between px-5 md:px-8 lg:px-12">
-        <a href="#top" className="group relative shrink-0" aria-label="TK World Investment Group — Home">
-          <BrandLogo size="md" priority className="transition duration-theme group-hover:opacity-90" />
+      <div className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-5 md:px-8 lg:h-24 lg:px-12">
+        <a
+          href="#top"
+          className="group shrink-0"
+          aria-label="TK World Investment Group — Home"
+        >
+          <BrandLogo
+            size="md"
+            priority
+            className="transition duration-theme group-hover:opacity-90"
+          />
         </a>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className="hidden items-center gap-9 lg:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-[13px] font-medium tracking-wide text-foreground/80 transition hover:text-gold"
+              className={cn(
+                "text-[13px] font-medium tracking-wide transition hover:text-gold",
+                scrolled ? "text-foreground/80" : "text-white/80"
+              )}
             >
               {link.label}
             </a>
@@ -57,13 +68,16 @@ export function Navigation() {
           <ThemeToggle />
           <MagneticLink
             href="#contact"
-            className="hidden items-center rounded-full border border-gold px-5 py-2.5 text-[12px] font-medium tracking-wide text-gold transition hover:bg-gold hover:text-[#0a0a0b] md:inline-flex"
+            className="hidden items-center rounded-full border border-gold px-6 py-2.5 text-[12px] font-medium tracking-wide text-gold transition hover:bg-gold hover:text-[#101013] md:inline-flex"
           >
             Discuss an Opportunity →
           </MagneticLink>
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] lg:hidden"
+            className={cn(
+              "flex h-10 w-10 items-center justify-center rounded-full border transition lg:hidden",
+              scrolled ? "border-[var(--border)] text-foreground" : "border-white/25 text-white"
+            )}
             aria-label={open ? "Close menu" : "Open menu"}
             onClick={() => setOpen((v) => !v)}
           >

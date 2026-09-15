@@ -42,7 +42,7 @@ export function IntroLoader({ onComplete }: { onComplete: () => void }) {
           >
             <BrandLogo size="xl" priority />
             <motion.div
-              className="mx-auto mt-8 h-px w-20 origin-center bg-gradient-to-r from-transparent via-[#c9a24b] to-transparent"
+              className="mx-auto mt-8 h-px w-20 origin-center bg-gradient-to-r from-transparent via-[#c9b07a] to-transparent"
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{ scaleX: 1, opacity: 1 }}
               transition={{ duration: 0.75, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}

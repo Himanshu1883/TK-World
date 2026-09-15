@@ -8,10 +8,10 @@ type BrandLogoProps = {
 };
 
 const sizes = {
-  sm: { width: 140, height: 40, className: "h-8 w-auto sm:h-9" },
-  md: { width: 180, height: 52, className: "h-10 w-auto sm:h-11" },
-  lg: { width: 260, height: 74, className: "h-14 w-auto sm:h-16" },
-  xl: { width: 420, height: 120, className: "h-20 w-auto sm:h-24 md:h-28" },
+  sm: { width: 260, height: 74, className: "h-10 w-auto" },
+  md: { width: 420, height: 120, className: "h-12 w-auto sm:h-14 lg:h-[3.75rem]" },
+  lg: { width: 520, height: 149, className: "h-16 w-auto sm:h-[4.5rem]" },
+  xl: { width: 900, height: 257, className: "h-24 w-auto sm:h-32 md:h-40" },
 };
 
 export function BrandLogo({
@@ -28,11 +28,7 @@ export function BrandLogo({
       width={s.width}
       height={s.height}
       priority={priority}
-      className={cn(
-        s.className,
-        "object-contain object-left",
-        className
-      )}
+      className={cn(s.className, "object-contain object-left", className)}
     />
   );
 }

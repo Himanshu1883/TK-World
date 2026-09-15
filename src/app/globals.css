@@ -2,65 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ---------------------------------------------
+   Light theme — warm ivory base, deep charcoal type
+---------------------------------------------- */
 :root {
-  --background: #f7f4ee;
+  --background: #f5f1e8;
   --foreground: #141414;
-  --card: #fffcf7;
+  --card: #ffffff;
   --muted: #6b6560;
-  --gold: #b8934a;
-  --gold-soft: #d4af6a;
-  --border: rgba(20, 20, 20, 0.08);
-  --overlay-grade: rgba(247, 244, 238, 0.12);
-  --image-contrast: 1.02;
-  --image-saturate: 0.92;
-  --image-brightness: 1.02;
-  --glass: rgba(255, 252, 247, 0.72);
-  --nav-solid: rgba(247, 244, 238, 0.82);
-  --stats-bg: rgba(247, 244, 238, 0.88);
-  --shadow-card: 0 18px 40px -24px rgba(20, 20, 20, 0.28);
-  --radius-card: 1.25rem;
+  --gold: #b8955a;
+  --gold-soft: #c9b07a;
+  --border: rgba(20, 20, 20, 0.1);
+  --overlay-grade: rgba(245, 241, 232, 0.1);
+  --image-contrast: 1.04;
+  --image-saturate: 0.95;
+  --image-brightness: 1;
+  --glass: rgba(255, 255, 255, 0.72);
+  --nav-solid: rgba(245, 241, 232, 0.85);
+  --shadow-card: 0 18px 40px -26px rgba(20, 20, 20, 0.3);
+  --radius-card: 0.875rem;
 
-  /* Alternating section bands (light theme: cream ↔ near-black) */
-  --band-base-bg: #f7f4ee;
-  --band-base-fg: #141414;
-  --band-base-muted: #6b6560;
-  --band-base-card: #fffcf7;
-  --band-base-border: rgba(20, 20, 20, 0.08);
-  --band-invert-bg: #0e0e10;
-  --band-invert-fg: #f5f2ec;
-  --band-invert-muted: #9a958c;
-  --band-invert-card: #15151a;
-  --band-invert-border: rgba(201, 162, 75, 0.14);
+  /* Section that runs opposite to the active theme */
+  --contrast-bg: #101013;
+  --contrast-fg: #f0ebe0;
+  --contrast-muted: #9a958c;
+  --contrast-card: #17171b;
+  --contrast-border: rgba(201, 176, 122, 0.18);
 }
 
+/* ---------------------------------------------
+   Dark theme — warm near-black, gold, ivory type
+---------------------------------------------- */
 .dark {
-  --background: #0a0a0b;
-  --foreground: #f5f2ec;
-  --card: #15151a;
+  --background: #101013;
+  --foreground: #f0ebe0;
+  --card: #17171b;
   --muted: #9a958c;
-  --gold: #c9a24b;
-  --gold-soft: #d4af6a;
-  --border: rgba(201, 162, 75, 0.12);
-  --overlay-grade: rgba(10, 10, 11, 0.35);
-  --image-contrast: 1.12;
-  --image-saturate: 0.95;
-  --image-brightness: 0.92;
-  --glass: rgba(14, 14, 16, 0.55);
-  --nav-solid: rgba(10, 10, 11, 0.72);
-  --stats-bg: rgba(14, 14, 16, 0.78);
-  --shadow-card: 0 24px 60px -20px rgba(0, 0, 0, 0.65);
+  --gold: #c9b07a;
+  --gold-soft: #e4d09a;
+  --border: rgba(201, 176, 122, 0.18);
+  --overlay-grade: rgba(16, 16, 19, 0.35);
+  --image-contrast: 1.1;
+  --image-saturate: 0.96;
+  --image-brightness: 0.94;
+  --glass: rgba(20, 20, 24, 0.55);
+  --nav-solid: rgba(16, 16, 19, 0.78);
+  --shadow-card: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
 
-  /* Alternating section bands (dark theme: near-black ↔ cream) */
-  --band-base-bg: #0a0a0b;
-  --band-base-fg: #f5f2ec;
-  --band-base-muted: #9a958c;
-  --band-base-card: #15151a;
-  --band-base-border: rgba(201, 162, 75, 0.12);
-  --band-invert-bg: #f7f4ee;
-  --band-invert-fg: #141414;
-  --band-invert-muted: #6b6560;
-  --band-invert-card: #fffcf7;
-  --band-invert-border: rgba(20, 20, 20, 0.08);
+  --contrast-bg: #f5f1e8;
+  --contrast-fg: #141414;
+  --contrast-muted: #6b6560;
+  --contrast-card: #ffffff;
+  --contrast-border: rgba(20, 20, 20, 0.1);
 }
 
 html {
@@ -107,7 +100,7 @@ body {
 
 @layer components {
   .eyebrow {
-    @apply text-[12px] sm:text-[13px] font-medium uppercase tracking-[0.18em] text-gold;
+    @apply text-[11px] font-medium uppercase tracking-[0.22em] text-gold sm:text-[12px];
   }
 
   .gold-rule {
@@ -117,8 +110,7 @@ body {
   }
 
   .image-grade {
-    filter: contrast(var(--image-contrast))
-      saturate(var(--image-saturate))
+    filter: contrast(var(--image-contrast)) saturate(var(--image-saturate))
       brightness(var(--image-brightness));
     transition: filter 400ms ease;
   }
@@ -128,7 +120,7 @@ body {
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.28) 100%),
+      radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.3) 100%),
       linear-gradient(180deg, transparent, var(--overlay-grade));
     mix-blend-mode: multiply;
     opacity: 0.85;
@@ -138,18 +130,9 @@ body {
     pointer-events: none;
     position: absolute;
     inset: 0;
-    opacity: 0.045;
+    opacity: 0.04;
     mix-blend-mode: overlay;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-
-  .mask-reveal {
-    clip-path: inset(0 0 100% 0);
-  }
-
-  .mask-reveal.is-inview {
-    clip-path: inset(0 0 0% 0);
-    transition: clip-path 1.1s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .link-underline {
@@ -184,35 +167,18 @@ body {
     border: 1px solid var(--border);
   }
 
-  .band-base {
-    background: var(--band-base-bg);
-    color: var(--band-base-fg);
-    --background: var(--band-base-bg);
-    --foreground: var(--band-base-fg);
-    --muted: var(--band-base-muted);
-    --card: var(--band-base-card);
-    --border: var(--band-base-border);
+  /* Section band that flips against the active theme */
+  .band-contrast {
+    background: var(--contrast-bg);
+    color: var(--contrast-fg);
+    --background: var(--contrast-bg);
+    --foreground: var(--contrast-fg);
+    --muted: var(--contrast-muted);
+    --card: var(--contrast-card);
+    --border: var(--contrast-border);
     transition:
       background-color 400ms ease,
       color 400ms ease;
-  }
-
-  .band-invert {
-    background: var(--band-invert-bg);
-    color: var(--band-invert-fg);
-    --background: var(--band-invert-bg);
-    --foreground: var(--band-invert-fg);
-    --muted: var(--band-invert-muted);
-    --card: var(--band-invert-card);
-    --border: var(--band-invert-border);
-    transition:
-      background-color 400ms ease,
-      color 400ms ease;
-  }
-
-  .card-surface {
-    border-radius: var(--radius-card);
-    overflow: hidden;
   }
 }
 
@@ -227,6 +193,10 @@ body {
 
   .will-parallax {
     will-change: transform;
+  }
+
+  .vertical-text {
+    writing-mode: vertical-rl;
   }
 }
 
@@ -251,17 +221,6 @@ body {
   }
 }
 
-@keyframes introFade {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .ken-burns,
   .will-parallax {
@@ -279,7 +238,6 @@ body {
   }
 }
 
-/* Hide default cursor on desktop when custom cursor is active */
 @media (pointer: fine) {
   .cursor-custom,
   .cursor-custom * {
