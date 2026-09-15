@@ -2,7 +2,7 @@
 
 import {
   FormEvent,
-  KeyboardEvent,
+  KeyboardEvent as ReactKeyboardEvent,
   useEffect,
   useId,
   useRef,
@@ -271,7 +271,7 @@ function InterestSelect({
     setActive(i >= 0 ? i : 0);
   }, [open, value]);
 
-  const onKey = (e: KeyboardEvent<HTMLButtonElement>) => {
+  const onKey = (e: ReactKeyboardEvent<HTMLButtonElement>) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
       if (!open) {
