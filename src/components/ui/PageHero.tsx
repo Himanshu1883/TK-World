@@ -23,7 +23,11 @@ export function PageHero({
         className="-z-10 object-cover image-grade-page"
       />
       <div
-        className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/55 via-ink/25 to-ink/10"
+        className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/50 via-ink/20 to-transparent"
+        aria-hidden
+      />
+      <div
+        className="absolute inset-x-0 top-0 -z-10 h-36 bg-gradient-to-b from-ink/75 via-ink/40 to-transparent sm:h-40"
         aria-hidden
       />
 

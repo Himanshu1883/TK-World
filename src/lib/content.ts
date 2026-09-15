@@ -3,12 +3,6 @@
  * Editing text here never requires touching a component.
  */
 
-const u = (id: string, w: number) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
-
-const pexels = (id: string, w: number) =>
-  `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}`;
-
 export const site = {
   name: "TK World Trading Group",
   shortName: "TK World",
@@ -45,27 +39,27 @@ export const hero = {
   footerRight: "Based in the United Arab Emirates",
   slides: [
     {
-      src: pexels("1470502", 2400),
+      src: "/images/hero-marina-dusk.jpg",
       alt: "Dubai Marina waterfront at dusk",
     },
     {
-      src: u("photo-1512453979798-5ea266f8880c", 2400),
+      src: "/images/hero-dubai-skyline.jpg",
       alt: "Dubai skyline at golden hour",
     },
     {
-      src: u("photo-1526495124232-a04e1849168c", 2400),
+      src: "/images/hero-sheikh-zayed.jpg",
       alt: "Sheikh Zayed Road at blue hour",
     },
     {
-      src: pexels("442579", 2400),
+      src: "/images/hero-towers-night.jpg",
       alt: "Dubai waterfront towers at night",
     },
     {
-      src: u("photo-1586528116311-ad8dd3c8310d", 2400),
+      src: "/images/hero-shipping-port.jpg",
       alt: "International shipping port at dusk",
     },
     {
-      src: u("photo-1497366754035-f200968a6e72", 2400),
+      src: "/images/hero-boardroom.jpg",
       alt: "Corporate headquarters boardroom",
     },
   ],
@@ -98,11 +92,11 @@ export const about = {
     "Through disciplined commercial practices, long-standing industry relationships and continuous market analysis, TK World Trading Group supports sustainable business growth while maintaining the highest professional standards across its operations.",
   ],
   image: {
-    src: u("photo-1517048676732-d65bc937f952", 1600),
+    src: "/images/about-meeting.jpg",
     alt: "Commercial meeting in progress at a corporate office",
   },
   banner: {
-    src: u("photo-1497366754035-f200968a6e72", 2000),
+    src: "/images/hero-boardroom.jpg",
     alt: "Corporate headquarters interior",
   },
 } as const;
@@ -114,7 +108,7 @@ export const whatWeDo = {
   title: "Commercial management across international markets.",
   lead: "The Group provides the strategic direction, trading expertise and shared services that allow its affiliated businesses to operate with consistency and scale.",
   banner: {
-    src: u("photo-1454165804606-c3d57bc86b40", 2000),
+    src: "/images/what-we-do-meeting.jpg",
     alt: "International business meeting around a conference table",
   },
   services: [
@@ -172,56 +166,56 @@ export const industries = {
   closing:
     "The diversity of the Group's activities enables it to leverage extensive commercial knowledge, established supplier relationships and international market expertise across multiple industries.",
   banner: {
-    src: u("photo-1494412574643-ff11b0a5c1c3", 2000),
+    src: "/images/industries-port.jpg",
     alt: "Freight containers stacked at an international port",
   },
   items: [
     {
       id: "luxury-watches",
       title: "Luxury Watches",
-      src: u("photo-1523170335258-f5ed11844a49", 1200),
+      src: "/images/industry-luxury-watches.jpg",
       alt: "Luxury mechanical wristwatch",
     },
     {
       id: "luxury-vehicles",
       title: "Luxury Vehicles",
-      src: u("photo-1503376780353-7e6692767b70", 1200),
+      src: "/images/industry-luxury-vehicles.jpg",
       alt: "Luxury sports car in profile",
     },
     {
       id: "premium-consumer-goods",
       title: "Premium Consumer Goods",
-      src: u("photo-1441986300917-64674bd600d8", 1200),
+      src: "/images/industry-consumer-goods.jpg",
       alt: "Premium consumer goods retail interior",
     },
     {
       id: "sports-entertainment",
       title: "Sports & Entertainment",
-      src: u("photo-1522778119026-d647f0596c20", 1200),
+      src: "/images/industry-sports.jpg",
       alt: "Floodlit stadium during an evening event",
     },
     {
       id: "hospitality",
       title: "Hospitality",
-      src: u("photo-1566073771259-6a8506099945", 1200),
+      src: "/images/industry-hospitality.jpg",
       alt: "Hotel exterior at dusk",
     },
     {
       id: "digital-commerce",
       title: "Digital Commerce",
-      src: u("photo-1556742049-0cfed4f6a45d", 1200),
+      src: "/images/industry-digital-commerce.jpg",
       alt: "Packaged goods prepared for online fulfilment",
     },
     {
       id: "international-trading",
       title: "International Trading",
-      src: u("photo-1578575437130-527eed3abbec", 1200),
+      src: "/images/industry-international-trading.jpg",
       alt: "Cargo vessel loaded with shipping containers",
     },
     {
       id: "strategic-procurement",
       title: "Strategic Procurement",
-      src: u("photo-1553729459-efe14ef6055d", 1200),
+      src: "/images/industry-procurement.jpg",
       alt: "Commercial agreement being reviewed at a desk",
     },
   ],
@@ -255,7 +249,7 @@ export const approach = {
     },
   ],
   image: {
-    src: u("photo-1600880292203-757bb62b4baf", 1600),
+    src: "/images/approach-partnership.jpg",
     alt: "Commercial partners concluding a business agreement",
   },
 } as const;
@@ -272,11 +266,11 @@ export const leadership = {
     "Under his leadership, TK World Trading Group has developed into a diversified regional management group recognised for its commercial expertise, long-standing industry relationships and commitment to operational excellence.",
   ],
   image: {
-    src: u("photo-1486406146926-c627a92ad1ab", 1400),
+    src: "/images/leadership-towers.jpg",
     alt: "Corporate towers viewed from below",
   },
   banner: {
-    src: u("photo-1431540015161-0bf868a2d407", 2000),
+    src: "/images/leadership-architecture.jpg",
     alt: "Modern commercial architecture",
   },
 } as const;
@@ -297,11 +291,11 @@ export const contact = {
   title: "Get in Touch",
   lead: "TK World Trading Group welcomes enquiries from suppliers, commercial partners and businesses seeking to explore strategic opportunities with the Group.",
   banner: {
-    src: u("photo-1518684079-3c830dcef090", 2000),
+    src: "/images/contact-coastline.jpg",
     alt: "Aerial view of the United Arab Emirates coastline",
   },
   office: {
-    src: u("photo-1526495124232-a04e1849168c", 1600),
+    src: "/images/hero-sheikh-zayed.jpg",
     alt: "Commercial district in the United Arab Emirates at dusk",
   },
   details: [

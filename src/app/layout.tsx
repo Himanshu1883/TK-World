@@ -27,7 +27,7 @@ const description =
   "TK World Trading Group is a privately owned international trading and commercial management group headquartered in the United Arab Emirates, providing strategic leadership, procurement and operational support across the GCC and international markets.";
 
 const ogImage = {
-  url: "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1200&h=630&q=80",
+  url: "/images/og.jpg",
   width: 1200,
   height: 630,
   alt: `${site.name} — ${site.tagline}`,
