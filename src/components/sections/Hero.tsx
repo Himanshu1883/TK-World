@@ -68,10 +68,10 @@ export function Hero({ introDone }: { introDone: boolean }) {
 
       <motion.div
         style={{ y: contentY }}
-        className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1440px] flex-col px-5 pb-10 pt-28 md:px-8 lg:px-12 lg:pb-14 lg:pt-32"
+        className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1440px] flex-col justify-center px-5 pb-10 pt-24 md:px-8 lg:px-12 lg:pb-12 lg:pt-28"
       >
         <motion.p
-          className="absolute right-5 top-28 hidden max-w-[7.5rem] text-right text-[10px] font-medium uppercase leading-[1.85] tracking-[0.22em] text-white/70 md:block lg:right-12 lg:top-32"
+          className="absolute right-5 top-24 hidden max-w-[7.5rem] text-right text-[10px] font-medium uppercase leading-[1.85] tracking-[0.22em] text-white/70 md:block lg:right-12 lg:top-28"
           initial={{ opacity: 0 }}
           animate={show ? { opacity: 1 } : {}}
           transition={{ duration: 0.9, delay: 0.7, ease }}
@@ -85,7 +85,7 @@ export function Hero({ introDone }: { introDone: boolean }) {
           Tomorrow
         </motion.p>
 
-        <div className="mt-auto max-w-[46rem] pb-8 lg:pb-6">
+        <div className="max-w-[46rem]">
           <motion.p
             className="text-[11px] font-medium uppercase tracking-[0.22em] text-[#c9b07a] sm:text-[12px]"
             initial={{ opacity: 0, y: 12 }}
@@ -143,7 +143,7 @@ export function Hero({ introDone }: { introDone: boolean }) {
         </div>
 
         <motion.div
-          className="grid max-w-3xl grid-cols-2 gap-y-8 md:grid-cols-4"
+          className="mt-10 grid max-w-3xl grid-cols-2 gap-y-8 md:mt-12 md:grid-cols-4"
           initial={{ opacity: 0, y: 12 }}
           animate={show ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.75, delay: 0.48, ease }}
